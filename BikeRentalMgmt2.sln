@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeRentalMgmt2.Server", "BikeRentalMgmt2\Server\BikeRentalMgmt2.Server.csproj", "{F527BE19-54D5-4181-B737-893A5D0171E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeRentalMgmt2.Client", "BikeRentalMgmt2\Client\BikeRentalMgmt2.Client.csproj", "{B67B2FBA-1634-43D0-AD1C-E98D79D69594}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeRentalMgmt2.Shared", "BikeRentalMgmt2\Shared\BikeRentalMgmt2.Shared.csproj", "{89E18421-3D0F-4642-A8DF-94696B7FF4D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F527BE19-54D5-4181-B737-893A5D0171E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F527BE19-54D5-4181-B737-893A5D0171E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F527BE19-54D5-4181-B737-893A5D0171E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F527BE19-54D5-4181-B737-893A5D0171E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67B2FBA-1634-43D0-AD1C-E98D79D69594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67B2FBA-1634-43D0-AD1C-E98D79D69594}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67B2FBA-1634-43D0-AD1C-E98D79D69594}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67B2FBA-1634-43D0-AD1C-E98D79D69594}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E18421-3D0F-4642-A8DF-94696B7FF4D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E18421-3D0F-4642-A8DF-94696B7FF4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E18421-3D0F-4642-A8DF-94696B7FF4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E18421-3D0F-4642-A8DF-94696B7FF4D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {273474EB-E497-481B-A7B9-F82899EA0FD9}
+	EndGlobalSection
+EndGlobal
