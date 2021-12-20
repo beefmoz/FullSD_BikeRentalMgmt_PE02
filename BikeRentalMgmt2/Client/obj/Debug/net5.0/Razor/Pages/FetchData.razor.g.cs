@@ -87,6 +87,20 @@ using BikeRentalMgmt2.Client.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 14 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
+using BikeRentalMgmt2.Shared.Domain;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
+using BikeRentalMgmt2.Client.Static;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\FetchData.razor"
 using Microsoft.AspNetCore.Authorization;
 

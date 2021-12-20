@@ -5,7 +5,7 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     },
     {
-      "hash": "sha256-zcY4WL4508MUzro1fRnLIoPP4y8U3i8Cq2HC554of\/k=",
+      "hash": "sha256-TbkXhYjv\/cqhZ2VuCw\/GKu5MF3ejVeKVE5uhKtSpe2A=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -809,11 +809,11 @@
       "url": "_framework\/BikeRentalMgmt2.Shared.pdb"
     },
     {
-      "hash": "sha256-9cDTRiprcI8+ksvHcb+V1z30CBbBl2gxn5aT40dQU0w=",
+      "hash": "sha256-MkF0wRnZCXkeTe1SH2A2lk1fa2drtKrOu3PuCRIYsAE=",
       "url": "_framework\/BikeRentalMgmt2.Client.dll"
     },
     {
-      "hash": "sha256-CxoBL3wd+UqYR90kIbR2583z\/euDoOiZPTY6BbCYE\/g=",
+      "hash": "sha256-2KjhBa1Vyi0rJG5lcFfkByPaR4T3DxoFrVrEz1qS\/D8=",
       "url": "_framework\/BikeRentalMgmt2.Client.pdb"
     },
     {
@@ -1689,5 +1689,5 @@
       "url": "BikeRentalMgmt2.Client.bundle.scp.css"
     }
   ],
-  "version": "xFpa9KBl"
+  "version": "Jc+7fomS"
 };

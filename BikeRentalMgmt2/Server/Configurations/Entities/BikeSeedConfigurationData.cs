@@ -25,7 +25,7 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                 new Bike
                 {
                     Id = 2,
-                    BikeModel= "NeoRiderz",
+                    BikeModel= "NeoRider",
                     BikeType = "Mountain",
                     BikeSize = "Medium",
                     BikeBranchID = 2

@@ -1,6 +1,8 @@
 using System.Linq;
 using BikeRentalMgmt2.Server.Data;
+using BikeRentalMgmt2.Server.IRepository;
 using BikeRentalMgmt2.Server.Models;
+using BikeRentalMgmt2.Server.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,8 @@ namespace BikeRentalMgmt2.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

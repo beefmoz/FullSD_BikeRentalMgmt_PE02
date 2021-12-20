@@ -1,0 +1,62 @@
+﻿@page "/branches/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Bike Rental Branches</h3>
+@if (Branches == null)
+{
+<div class="alert alert-info">Loading Branches...</div>
+}
+else
+{
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var branch in Branches)
+        {
+        <tr>
+            <td>!@branch.Id</td>
+            <td>
+                <a href="/branches/view/@branch.Id" class="btn btn-primary">
+                    <span class="oi oi-book"></span>
+                </a>
+                <a href="/branches/edit/@branch.Id" class="btn btn-warning">
+                    <span class="oi oi-pencil"></span>
+                </a>
+                <button class="btn btn-danger" @onclick="@(()=>Delete(branch.Id))">
+                    <span class="oi oi-delete"></span>
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+
+@code {
+    private List<Branch> Branches;
+    protected async override Task OnInitializedAsync()
+    {
+        Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
+    }
+
+    async Task Delete(int branchId)
+    {
+        var branch = Branches.First(q => q.Id == branchId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {branch.Id}?");
+
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.BranchesEndpoint}/{branchId}");
+        }
+
+        await OnInitializedAsync();
+    }
+}
+}

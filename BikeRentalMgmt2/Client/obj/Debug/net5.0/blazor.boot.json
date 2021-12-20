@@ -199,11 +199,12 @@
       "netstandard.dll": "sha256-dOHF0zANIyA4WS496iWrAkTuEFWSWrXJjZj2pQQHrMA=",
       "System.Private.CoreLib.dll": "sha256-C96+zv+mWW0XzMG520oRgAG1lHVY8xzWGc6oc6rFjws=",
       "BikeRentalMgmt2.Shared.dll": "sha256-KQVkOwu29jU1BdWEX\/S5LDfQQ3bGH0\/qHaiI+hNPwKE=",
-      "BikeRentalMgmt2.Client.dll": "sha256-9cDTRiprcI8+ksvHcb+V1z30CBbBl2gxn5aT40dQU0w="
+      "BikeRentalMgmt2.Client.dll": "sha256-MkF0wRnZCXkeTe1SH2A2lk1fa2drtKrOu3PuCRIYsAE="
     },
     "lazyAssembly": null,
     "pdb": {
-      "BikeRentalMgmt2.Client.pdb": "sha256-CxoBL3wd+UqYR90kIbR2583z\/euDoOiZPTY6BbCYE\/g="
+      "BikeRentalMgmt2.Shared.pdb": "sha256-IPFfuJ+95fkFJKhCNoFQJtXUipxXTBMtMH8FGoOis10=",
+      "BikeRentalMgmt2.Client.pdb": "sha256-2KjhBa1Vyi0rJG5lcFfkByPaR4T3DxoFrVrEz1qS\/D8="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-ir9YCVnnk7popgsYUkvitfGA4WpkP1ydPh\/ENHnxGys=",

@@ -653,3 +653,7 @@ C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\BikeRentalMgmt2.Client.pdb
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\serviceworkers\wwwroot\service-worker.js
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\service-worker-assets.js
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\RazorDeclaration\Pages\Branches\Index.razor.g.cs
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\Razor\Pages\Branches\Index.razor.g.cs
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\RazorDeclaration\Pages\Bikes\Index.razor.g.cs
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\Razor\Pages\Bikes\Index.razor.g.cs

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BikeRentalMgmt2.Server.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
