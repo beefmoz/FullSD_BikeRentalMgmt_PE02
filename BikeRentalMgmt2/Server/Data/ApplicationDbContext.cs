@@ -36,8 +36,8 @@ namespace BikeRentalMgmt2.Server.Data
 
             builder.ApplyConfiguration(new BranchSeedConfigurationFK());
             builder.ApplyConfiguration(new StaffSeedConfigurationFK());
-            builder.ApplyConfiguration(new CustomerSeedConfigurationFK());
-            builder.ApplyConfiguration(new BikeSeedConfigurationFK());
+            //builder.ApplyConfiguration(new CustomerSeedConfigurationFK());
+            //builder.ApplyConfiguration(new BikeSeedConfigurationFK());
 
             builder.ApplyConfiguration(new BranchSeedConfigurationData());
             builder.ApplyConfiguration(new StaffSeedConfigurationData());

@@ -230,3 +230,7 @@ C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\Razor\Pages\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\Razor\Pages\_ViewImports.cshtml.g.cs
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\Razor\Pages\_ViewStart.cshtml.g.cs
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\bin\Debug\net5.0\Toolbelt.Blazor.HttpClientInterceptor.dll

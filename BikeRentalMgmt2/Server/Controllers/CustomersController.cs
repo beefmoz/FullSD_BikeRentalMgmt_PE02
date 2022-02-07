@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BikeRentalMgmt2.Server.Data;
 using BikeRentalMgmt2.Shared.Domain;
 using BikeRentalMgmt2.Server.IRepository;
+using System.Net.Http;
 
 namespace BikeRentalMgmt2.Server.Controllers
 {
@@ -34,8 +35,11 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
-            var customer = await _unitOfWork.Customers.GetAll(q => q.Id == id); 
-
+            //var client = new HttpClient();
+            var customer = await _unitOfWork.Customers.Get(q => q.Id == id);
+            //var response = await client.GetAsync(builder.Uri);
+            //var result = await response.Content.ReadAsStringAsync();
+            //List<Customer> data = JsonSerializer.Deserialize<List<Customer>>(result);
             if (customer == null)
             {
                 return NotFound();

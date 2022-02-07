@@ -1,0 +1,138 @@
+﻿@page "/rentorders/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Register New rentorder</h3>
+
+<hr />
+<br />
+
+<EditForm Model="@rentorder" OnValidSubmit="Createrentorder">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Rent Start: </label>
+        <div>
+            <InputDate @bind-Value="@rentorder.RentStart" class="form-control" />
+            <ValidationMessage For="@(() => rentorder.RentStart)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Rent End: </label>
+        <div>
+            <InputDate @bind-Value="@rentorder.RentEnd" class="form-control" />
+            <ValidationMessage For="@(() => rentorder.RentEnd)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer ID: </label>
+
+        <div>
+            <InputSelect @bind-Value="rentorder.RentCustomerID" class="form-control">
+
+                <option value="">-- Select Customer --</option>
+                @if (Customers != null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@customer.Id">@customer.Id</option>
+                    }
+                }
+
+            </InputSelect>
+            <ValidationMessage For="@(() => rentorder.RentCustomerID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Bike ID: </label>
+
+        <div>
+            <InputSelect @bind-Value="rentorder.RentBikeID" class="form-control">
+
+                <option value="">-- Select Bike --</option>
+                @if (Bikes != null)
+                {
+                    foreach (var bike in Bikes)
+                    {
+                        <option value="@bike.Id">@bike.BikeModel</option>
+                    }
+                }
+
+            </InputSelect>
+            <ValidationMessage For="@(() => rentorder.RentBikeID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Branch ID: </label>
+
+        <div>
+            <InputSelect @bind-Value="rentorder.RentBranchID" class="form-control">
+
+                <option value="">-- Select Branch --</option>
+                @if (Branches != null)
+                {
+                    foreach (var branch in Branches)
+                    {
+                        <option value="@branch.Id">@branch.BranchAddr</option>
+                    }
+                }
+
+            </InputSelect>
+            <ValidationMessage For="@(() => rentorder.RentBranchID)" />
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label>Rent Duration: </label>
+
+        <div>
+            <InputText @bind-Value="@rentorder.RentDuration" class="form-control" />
+            <ValidationMessage For="@(() => rentorder.RentDuration)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Rent Cost: </label>
+
+        <div>
+            <InputNumber @bind-Value="@rentorder.RentCost" class="form-control" />
+            <ValidationMessage For="@(() => rentorder.RentCost)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Register Rent Order
+    </button>
+
+</EditForm>
+
+@code {
+
+    RentOrder rentorder = new RentOrder();
+
+    private IList<Branch> Branches;
+    private IList<RentOrder> Rentorders;
+    private IList<Customer> Customers;
+    private IList<Bike> Bikes;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
+        Rentorders = await _client.GetFromJsonAsync<List<RentOrder>>($"{Endpoints.RentOrdersEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        Bikes = await _client.GetFromJsonAsync<List<Bike>>($"{Endpoints.BikesEndpoint}");
+    }
+
+    private async Task Createrentorder()
+    {
+        await _client.PostAsJsonAsync(Endpoints.RentOrdersEndpoint, rentorder);
+        _navManager.NavigateTo("/rentorders/");
+    }
+}

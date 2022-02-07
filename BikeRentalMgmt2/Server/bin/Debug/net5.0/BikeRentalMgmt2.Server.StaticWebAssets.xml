@@ -3,5 +3,5 @@
   <ContentRoot BasePath="/" Path="C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\obj\Debug\net5.0\scopedcss\bundle\" />
   <ContentRoot BasePath="/" Path="C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\wwwroot\" />
   <ContentRoot BasePath="/Identity" Path="C:\Users\Amoz\.nuget\packages\microsoft.aspnetcore.identity.ui\5.0.12\staticwebassets\V4\" />
-  <ContentRoot BasePath="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication" Path="C:\Users\Amoz\.nuget\packages\microsoft.aspnetcore.components.webassembly.authentication\5.0.12\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication" Path="C:\Users\Amoz\.nuget\packages\microsoft.aspnetcore.components.webassembly.authentication\5.0.11\build\..\staticwebassets\" />
 </StaticWebAssets>

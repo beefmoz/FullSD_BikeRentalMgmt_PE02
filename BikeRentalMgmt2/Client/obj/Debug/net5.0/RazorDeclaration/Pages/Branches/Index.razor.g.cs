@@ -91,14 +91,14 @@ using BikeRentalMgmt2.Client.Shared;
 #nullable disable
 #nullable restore
 #line 12 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Authorization;
+using BikeRentalMgmt2.Client.Static;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using BikeRentalMgmt2.Client.Components;
 
 #line default
 #line hidden
@@ -112,7 +112,21 @@ using BikeRentalMgmt2.Shared.Domain;
 #nullable disable
 #nullable restore
 #line 15 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using BikeRentalMgmt2.Client.Static;
+using Microsoft.AspNetCore.Authorization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
+using BikeRentalMgmt2.Client.Services;
 
 #line default
 #line hidden
@@ -133,26 +147,27 @@ using BikeRentalMgmt2.Client.Static;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 42 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Branches\Index.razor"
-       
-    private List<Branch> Branches;
-    protected async override Task OnInitializedAsync()
-    {
-        Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
-    }
-
-    async Task Delete(int branchId)
-    {
-        var branch = Branches.First(q => q.Id == branchId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {branch.Id}?");
-
-        if (confirm)
+#line 50 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Branches\Index.razor"
+           
+        private List<Branch> Branches;
+        protected async override Task OnInitializedAsync()
         {
-            await _client.DeleteAsync($"{Endpoints.BranchesEndpoint}/{branchId}");
+            Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
         }
 
-        await OnInitializedAsync();
-    }
+        async Task Delete(int branchId)
+        {
+            var branch = Branches.First(q => q.Id == branchId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {branch.Id}?");
+
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.BranchesEndpoint}/{branchId}");
+            }
+
+            await OnInitializedAsync();
+        }
+    
 
 #line default
 #line hidden

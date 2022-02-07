@@ -1,0 +1,90 @@
+﻿@page "/bikes/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Register New Bike</h3>
+
+<hr />
+<br />
+
+<EditForm Model="@bike" OnValidSubmit="CreateBike">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Bike Model: </label>
+
+        <div>
+            <InputText @bind-Value="@bike.BikeModel" class="form-control" />
+            <ValidationMessage For="@(() => bike.BikeModel)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Bike Type: </label>
+
+        <div>
+            <InputText @bind-Value="@bike.BikeType" class="form-control" />
+            <ValidationMessage For="@(() => bike.BikeType)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Bike Size: </label>
+
+        <div>
+            <InputSelect @bind-Value="bike.BikeSize" class="form-control">
+                <option value="">-- Select Bike Size --</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => bike.BikeSize)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Branch ID: </label>
+
+        <div>
+            <InputSelect @bind-Value="@bike.BikeBranchID" class="form-control">
+
+                <option value="">-- Select Branch --</option>
+                @if (Branches != null)
+                {
+                    foreach (var branch in Branches)
+                    {
+                        <option value="@branch.Id">@branch.BranchAddr</option>
+                    }
+                }
+
+            </InputSelect>
+            <ValidationMessage For="@(() => bike.BikeBranchID)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Bike
+    </button>
+
+</EditForm>
+
+@code {
+
+    Bike bike = new Bike();
+
+    private IList<Branch> Branches;
+    private IList<Bike> Bikes;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
+        Bikes = await _client.GetFromJsonAsync<List<Bike>>($"{Endpoints.BikesEndpoint}");
+    }
+
+    private async Task CreateBike()
+    {
+        await _client.PostAsJsonAsync(Endpoints.BikesEndpoint, bike);
+        _navManager.NavigateTo("/bikes/");
+    }
+}

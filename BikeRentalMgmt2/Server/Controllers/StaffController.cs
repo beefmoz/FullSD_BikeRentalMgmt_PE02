@@ -26,7 +26,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStaff()
         {
-            var staff =  await _unitOfWork.Staff.GetAll();
+            var staff =  await _unitOfWork.Staff.GetAll(includes: q => q.Include(x => x.Branch));
             return Ok(staff);
         }
 
@@ -34,7 +34,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Staff>> GetStaff(int id)
         {
-            var staff = await _unitOfWork.Staff.GetAll(q => q.Id == id); 
+            var staff = await _unitOfWork.Staff.Get(q => q.Id == id); 
 
             if (staff == null)
             {

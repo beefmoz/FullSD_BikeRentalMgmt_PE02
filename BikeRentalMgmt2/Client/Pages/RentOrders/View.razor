@@ -1,0 +1,17 @@
+﻿@page "/rentorder/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View rent order</h3>
+
+<FormComponent rentorder="rentorder" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    RentOrder rentorder = new RentOrder();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        rentorder = await _client.GetFromJsonAsync<RentOrder>($"{Endpoints.RentOrdersEndpoint}/{id}");
+    }
+}

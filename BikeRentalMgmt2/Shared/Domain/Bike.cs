@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,9 @@ namespace BikeRentalMgmt2.Shared.Domain
         public string BikeModel { get; set; }
         public string BikeType { get; set; }
         public string BikeSize { get; set; }
-        public int BikeBranchID { get; set; }
+        public Nullable <int> BikeBranchID { get; set; }
         public virtual Branch Branch { get; set; }
-        public virtual RentOrder RentOrder {get; set;}
+
+        public virtual List<RentOrder> RentOrders { get; set; }
     }
 }

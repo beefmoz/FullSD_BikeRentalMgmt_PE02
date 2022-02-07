@@ -45,8 +45,10 @@ namespace BikeRentalMgmt2.Server
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(op =>
+            op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

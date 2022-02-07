@@ -15,8 +15,8 @@ namespace BikeRentalMgmt2.Server.Controllers
     [ApiController]
     public class BranchesController : ControllerBase
     {
-        //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
+
         public BranchesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -26,15 +26,15 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBranches()
         {
-            var branches=  await _unitOfWork.Branches.GetAll();
+            var branches = await _unitOfWork.Branches.GetAll(includes: q => q.Include(x => x.Staff));
             return Ok(branches);
         }
 
         // GET: api/Bikes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Branch>> GetBranch(int id)
+        public async Task<IActionResult> GetBranch(int id)
         {
-            var branch = await _unitOfWork.Branches.GetAll(q => q.Id == id); 
+            var branch = await _unitOfWork.Branches.Get(q => q.Id == id);
 
             if (branch == null)
             {

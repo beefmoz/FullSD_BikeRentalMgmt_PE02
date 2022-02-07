@@ -26,7 +26,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBikes()
         {
-            var bikes=  await _unitOfWork.Bikes.GetAll();
+            var bikes=  await _unitOfWork.Bikes.GetAll(includes: q => q.Include(x => x.Branch));
             return Ok(bikes);
         }
 
@@ -34,7 +34,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Bike>> GetBike(int id)
         {
-            var bike = await _unitOfWork.Bikes.GetAll(q => q.Id == id); 
+            var bike = await _unitOfWork.Bikes.Get(q => q.Id == id); 
 
             if (bike == null)
             {

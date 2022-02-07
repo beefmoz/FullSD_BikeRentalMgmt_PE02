@@ -12,7 +12,7 @@ namespace BikeRentalMgmt2.Client.Static
         public static readonly string BikesEndpoint = $"{Prefix}/bikes";
         public static readonly string BranchesEndpoint = $"{Prefix}/branches";
         public static readonly string StaffEndpoint = $"{Prefix}/staff";
-        public static readonly string CustomersfEndpoint = $"{Prefix}/custoers";
-        public static readonly string RentOrdersfEndpoint = $"{Prefix}/rentorders";
+        public static readonly string CustomersEndpoint = $"{Prefix}/customers";
+        public static readonly string RentOrdersEndpoint = $"{Prefix}/rentorders";
     }
 }

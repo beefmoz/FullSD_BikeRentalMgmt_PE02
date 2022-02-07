@@ -12,8 +12,7 @@ namespace BikeRentalMgmt2.Shared.Domain
         public string BranchContact { get; set; }
         public Nullable<int> ManagerID { get; set; }
         public virtual Staff Staff { get; set; }
-        public virtual Bike Bike { get; set; }
+        public virtual List<Bike> Bikes { get; set; }
 
-        public virtual RentOrder RentOrder { get; set; }
     }
 }

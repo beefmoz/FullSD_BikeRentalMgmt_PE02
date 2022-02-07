@@ -1,0 +1,3 @@
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\bin\Debug\net5.0\publish\BikeRentalMgmt2.Shared.dll
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\bin\Debug\net5.0\publish\BikeRentalMgmt2.Shared.deps.json
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\bin\Debug\net5.0\publish\BikeRentalMgmt2.Shared.pdb

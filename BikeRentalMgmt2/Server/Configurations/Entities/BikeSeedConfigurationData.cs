@@ -12,25 +12,7 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
     {
         public void Configure(EntityTypeBuilder<Bike> builder)
         {
-            builder.HasData(
-                new Bike
-                {
-                    Id = 1,
-                    BikeModel= "BMW",
-                    BikeType = "Mountain",
-                    BikeSize = "Small",
-                    BikeBranchID= 1
-                },
 
-                new Bike
-                {
-                    Id = 2,
-                    BikeModel= "NeoRider",
-                    BikeType = "Mountain",
-                    BikeSize = "Medium",
-                    BikeBranchID = 2
-                }
-            );
         }
     }
 }

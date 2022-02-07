@@ -7,13 +7,5 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BikeRentalMgmt2.Server.Configurations.Entities
 {
-    public class CustomerSeedConfigurationFK : IEntityTypeConfiguration<Customer>
-    {
-        public void Configure(EntityTypeBuilder<Customer> builder)
-        {
-            builder.HasOne(a => a.RentOrder)
-           .WithOne(a => a.Customer)
-           .HasForeignKey<RentOrder>(r => r.RentCustomerID);
-        }
-    }
+
 }

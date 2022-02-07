@@ -19,4 +19,5 @@ namespace BikeRentalMgmt2.Shared.Domain
         public string RentDuration { get; set; }
         public decimal RentCost { get; set; }
     }
+
 }

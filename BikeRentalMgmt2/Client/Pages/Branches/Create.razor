@@ -1,0 +1,76 @@
+﻿@page "/branches/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Register New branch</h3>
+
+<hr />
+<br />
+
+<EditForm Model="@branch" OnValidSubmit="CreateBranch">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Branch Address: </label>
+
+        <div>
+            <InputText @bind-Value="@branch.BranchAddr" class="form-control" />
+            <ValidationMessage For="@(() => branch.BranchAddr)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Branch Contact: </label>
+
+        <div>
+            <InputText @bind-Value="@branch.BranchContact" class="form-control" />
+            <ValidationMessage For="@(() => branch.BranchContact)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Branch Manager: </label>
+
+        <div>
+            <InputSelect @bind-Value="branch.ManagerID" class="form-control">
+
+                <option value="">-- Select Manager --</option>
+                @if (Staffs != null)
+                {
+                    foreach (var staff in Staffs)
+                    {
+                        <option value="@staff.Id">@staff.StaffName</option>
+                    }
+                }
+
+            </InputSelect>
+            <ValidationMessage For="@(() => branch.ManagerID)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create branch
+    </button>
+
+</EditForm>
+
+@code {
+
+    Branch branch = new Branch();
+
+    private IList<Branch> Branches;
+    private IList<Staff> Staffs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffEndpoint}");
+    }
+
+    private async Task CreateBranch()
+    {
+        await _client.PostAsJsonAsync(Endpoints.BranchesEndpoint, branch);
+        _navManager.NavigateTo("/branches/");
+    }
+}

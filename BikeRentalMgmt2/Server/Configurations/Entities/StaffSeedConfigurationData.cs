@@ -30,7 +30,7 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                    StaffContact = "81234568",
                    StaffEmail = "andrews09@hotmail.com",
                    StaffAddr = "Simei",
-                   StaffBranchID= 1,
+                   StaffBranchID= null,
                    StaffPos = "Branch Manager"
                },
                new Staff
@@ -40,7 +40,7 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                    StaffContact = "81235468",
                    StaffEmail = "benben09@hotmail.com",
                    StaffAddr = "Orchard",
-                   StaffBranchID = 2,
+                   StaffBranchID = null,
                    StaffPos = "Branch Manager"
                }
             );

@@ -16,13 +16,6 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
             .WithOne(a => a.Branch)
             .HasForeignKey<Staff>(c => c.StaffBranchID);
 
-            builder.HasOne(a => a.Bike)
-            .WithOne(a => a.Branch)
-            .HasForeignKey<Bike>(c => c.BikeBranchID);
-
-            builder.HasOne(a => a.RentOrder)
-            .WithOne(a => a.Branch)
-            .HasForeignKey<RentOrder>(r => r.RentBranchID);
 
         }
     }

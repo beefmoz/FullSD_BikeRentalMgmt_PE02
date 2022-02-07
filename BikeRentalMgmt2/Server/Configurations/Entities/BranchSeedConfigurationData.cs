@@ -20,12 +20,11 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                     BranchContact= "61234098",
                     ManagerID= null
                 },
-
                 new Branch
                 {
                     Id = 2,
                     BranchAddr = "East Coast Park",
-                    BranchContact = "61255098",
+                    BranchContact = "61234098",
                     ManagerID = null
                 }
             );

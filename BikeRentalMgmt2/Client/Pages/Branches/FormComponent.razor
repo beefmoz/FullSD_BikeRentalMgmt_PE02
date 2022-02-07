@@ -1,0 +1,62 @@
+﻿@inject HttpClient _client
+<EditForm Model="@branch" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Branch Address: </label>
+
+        <div>
+            <InputText @bind-Value="@branch.BranchAddr" class="form-control" />
+            <ValidationMessage For="@(() => branch.BranchAddr)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Branch Contact: </label>
+
+        <div>
+            <InputText @bind-Value="@branch.BranchContact" class="form-control" />
+            <ValidationMessage For="@(() => branch.BranchContact)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Branch Manager: </label>
+
+        <div>
+            <InputSelect @bind-Value="branch.ManagerID" class="form-control">
+
+                <option value="">-- Select Manager --</option>
+                @if (Staffs != null)
+                {
+                    foreach (var staff in Staffs)
+                    {
+                        <option value="@staff.Id">@staff.StaffName</option>
+                    }
+                }
+
+            </InputSelect>
+            <ValidationMessage For="@(() => branch.ManagerID)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create branch
+    </button>
+    <BackToList Target="branches" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Branch branch { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Staff> Staffs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffEndpoint}");
+    }
+}
