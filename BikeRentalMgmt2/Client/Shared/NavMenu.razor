@@ -1,10 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Components.Authorization
 
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
 <div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">CarRentalManagementTemp</a>
+    <a class="navbar-brand" href="">Bike Rental Management</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,8 +25,10 @@
                 </li>
                 <li class="nav-item px-3">
                     @*<NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All">*@
-                    <NavLink class="nav-link" href="/identity/account/logout" Match="NavLinkMatch.All" @onclick="BeginSignOut">
-                        <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
+                    <NavLink class="nav-link" href="#" @onclick="BeginSignOut"
+                             Match="NavLinkMatch.All">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span>
+                        Log out
                     </NavLink>
                 </li>
             </Authorized>
@@ -39,22 +44,12 @@
                     </NavLink>
                 </li>
                 @*<a href="authentication/register">Register</a>
-                <a href="authentication/login">Log in</a>*@
+                    <a href="authentication/login">Log in</a>*@
             </NotAuthorized>
         </AuthorizeView>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
         </li>
         <li class="nav-item px-3">

@@ -9,7 +9,8 @@ namespace BikeRentalMgmt2.Shared.Domain
 {
     public class Customer: BaseDomainModel
     {
-        public string CustName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string CustEmail { get; set; }
         public string CustContact { get; set; }
         public string CustAddr { get; set; }

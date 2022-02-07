@@ -16,7 +16,8 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                new Staff
                {
                    Id = 1,
-                   StaffName = "Lea",
+                   FirstName = "Lea",
+                   LastName= "Tan",
                    StaffContact = "81234567",
                    StaffEmail = "Lea819@hotmail.com",
                    StaffAddr = "Simei",
@@ -26,7 +27,8 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                new Staff
                {
                    Id = 2,
-                   StaffName = "Andrew",
+                   FirstName = "Andrew",
+                   LastName = "Tan",
                    StaffContact = "81234568",
                    StaffEmail = "andrews09@hotmail.com",
                    StaffAddr = "Simei",
@@ -36,7 +38,8 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                new Staff
                {
                    Id = 3,
-                   StaffName = "Benjamin",
+                   FirstName = "Benjamin",
+                   LastName = "Tan",
                    StaffContact = "81235468",
                    StaffEmail = "benben09@hotmail.com",
                    StaffAddr = "Orchard",

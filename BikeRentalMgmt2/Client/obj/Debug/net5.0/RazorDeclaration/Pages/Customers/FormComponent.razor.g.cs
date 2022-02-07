@@ -139,7 +139,7 @@ using BikeRentalMgmt2.Client.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 53 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Customers\FormComponent.razor"
+#line 62 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Customers\FormComponent.razor"
        
     [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Customer customer { get; set; }

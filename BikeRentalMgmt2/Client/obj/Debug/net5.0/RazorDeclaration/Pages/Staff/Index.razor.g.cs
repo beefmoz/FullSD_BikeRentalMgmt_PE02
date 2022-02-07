@@ -132,14 +132,14 @@ using BikeRentalMgmt2.Client.Services;
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Staff\Index.razor"
+#line 6 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Staff\Index.razor"
            [Authorize]
 
 #line default
 #line hidden
 #nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/staffs/")]
-    public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class Index : Microsoft.AspNetCore.Components.ComponentBase, IDisposable
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -147,29 +147,43 @@ using BikeRentalMgmt2.Client.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 48 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Staff\Index.razor"
-                        private List<Staff> Staff;
-                    protected async override Task OnInitializedAsync()
-                    {
-                        Staff = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffEndpoint}");
-                    }
+#line 49 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Staff\Index.razor"
+        
+        private List<Staff> Staff;
 
-                    async Task Delete(int StaffId)
-                    {
-                        var staff = Staff.First(q => q.Id == StaffId);
-                        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete staff Id {staff.Id}?");
+        protected async override Task OnInitializedAsync()
+        {
+            _interceptor.MonitorEvent();
+            Staff = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffEndpoint}");
+        }
 
-                        if (confirm)
-                        {
-                            await _client.DeleteAsync($"{Endpoints.StaffEndpoint}/{StaffId}");
-                        }
+        async Task Delete(int StaffId)
+        {
+            var staff = Staff.First(q => q.Id == StaffId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete staff Id {staff.Id}?");
 
-                        await OnInitializedAsync();
-                    } 
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.StaffEndpoint}/{StaffId}");
+            }
+
+            await OnInitializedAsync();
+        }
+        protected async override Task OnAfterRenderAsync(bool firstRender)
+        {
+            await js.InvokeVoidAsync("AddDataTable", "#staffsTable");
+        }
+
+        public void Dispose()
+        {
+            js.InvokeVoidAsync("DataTablesDispose", "#staffsTable");
+        }
+    
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpInterceptorService _interceptor { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime js { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpClient _client { get; set; }
     }

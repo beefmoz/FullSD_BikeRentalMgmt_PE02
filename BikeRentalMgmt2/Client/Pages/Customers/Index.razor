@@ -1,6 +1,8 @@
 ﻿@page "/customers/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
 
 <h3 class="card-title">Bike Rental Customers</h3>
@@ -16,39 +18,40 @@
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
+<table class="table table-responsive" id="customersTable">
+    <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Customers)
+        {
             <tr>
-                <th>Customer Name</th>
-                <th>Actions</th>
+                <td>@customer.FirstName</td>
+                <td>
+                    <a href="/customers/view/@customer.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/customers/edit/@customer.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(() => Delete(customer.Id))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Customers)
-            {
-                <tr>
-                    <td>@customer.CustName</td>
-                    <td>
-                        <a href="/customers/view/@customer.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/customers/edit/@customer.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(customer.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 
     @code {
         private List<Customer> Customers;
         protected async override Task OnInitializedAsync()
         {
+            _interceptor.MonitorEvent();
             Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
         }
 
@@ -64,5 +67,16 @@ else
 
             await OnInitializedAsync();
         }
+
+        protected async override Task OnAfterRenderAsync(bool firstRender)
+        {
+            await js.InvokeVoidAsync("AddDataTable", "#customersTable");
+        }
+
+        public void Dispose()
+        {
+            js.InvokeVoidAsync("DataTablesDispose", "#customersTable");
+        }
+
     }
 }

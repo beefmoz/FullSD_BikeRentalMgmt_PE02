@@ -27,6 +27,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCustomers()
         {
+            //return NotFound();
             var customers =  await _unitOfWork.Customers.GetAll();
             return Ok(customers);
         }

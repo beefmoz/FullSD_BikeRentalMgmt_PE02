@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeRentalMgmt2.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220207064056_newDb")]
+    [Migration("20220207150616_newDb")]
     partial class newDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,7 +176,10 @@ namespace BikeRentalMgmt2.Server.Migrations
                     b.Property<string>("CustEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustName")
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -190,7 +193,8 @@ namespace BikeRentalMgmt2.Server.Migrations
                             CustAddr = "Simei",
                             CustContact = "91234567",
                             CustEmail = "amozlow888@gmail.com",
-                            CustName = "Amoz"
+                            FirstName = "Amoz",
+                            LastName = "Tan"
                         },
                         new
                         {
@@ -198,7 +202,8 @@ namespace BikeRentalMgmt2.Server.Migrations
                             CustAddr = "Sengkang",
                             CustContact = "91234568",
                             CustEmail = "Dead_Pixelz@gmail.com",
-                            CustName = "Hou Sheng"
+                            FirstName = "Hou Sheng",
+                            LastName = "Tan"
                         });
                 });
 
@@ -257,6 +262,12 @@ namespace BikeRentalMgmt2.Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StaffAddr")
                         .HasColumnType("nvarchar(max)");
 
@@ -267,9 +278,6 @@ namespace BikeRentalMgmt2.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StaffEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StaffName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StaffPos")
@@ -283,28 +291,31 @@ namespace BikeRentalMgmt2.Server.Migrations
                         new
                         {
                             Id = 1,
+                            FirstName = "Lea",
+                            LastName = "Tan",
                             StaffAddr = "Simei",
                             StaffContact = "81234567",
                             StaffEmail = "Lea819@hotmail.com",
-                            StaffName = "Lea",
                             StaffPos = "Counter"
                         },
                         new
                         {
                             Id = 2,
+                            FirstName = "Andrew",
+                            LastName = "Tan",
                             StaffAddr = "Simei",
                             StaffContact = "81234568",
                             StaffEmail = "andrews09@hotmail.com",
-                            StaffName = "Andrew",
                             StaffPos = "Branch Manager"
                         },
                         new
                         {
                             Id = 3,
+                            FirstName = "Benjamin",
+                            LastName = "Tan",
                             StaffAddr = "Orchard",
                             StaffContact = "81235468",
                             StaffEmail = "benben09@hotmail.com",
-                            StaffName = "Benjamin",
                             StaffPos = "Branch Manager"
                         });
                 });

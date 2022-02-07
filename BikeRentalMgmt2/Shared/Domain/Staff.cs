@@ -8,7 +8,8 @@ namespace BikeRentalMgmt2.Shared.Domain
 {
     public class Staff: BaseDomainModel
     {
-        public string StaffName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string StaffContact { get; set; }
         public string StaffEmail { get; set; }
         public string StaffAddr { get; set; }

@@ -5,7 +5,7 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     },
     {
-      "hash": "sha256-1orob\/iv3EQlQKoq16bTKMiyW2GjCkOJgQq9zvsaZH4=",
+      "hash": "sha256-dfkiFgv7MyCyyKg92nDjGLSTSB0kB6Z7iwilA\/2njXY=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -805,19 +805,19 @@
       "url": "_framework\/dotnet.5.0.13.js"
     },
     {
-      "hash": "sha256-TQhOXbLE9n10r7X0sej0ETavjp7bGluES2TsNetis8k=",
+      "hash": "sha256-9NHeSfdKZeUKzs4SE+so9SAkYdcclkgAg2O1jh2wZVI=",
       "url": "_framework\/BikeRentalMgmt2.Shared.dll"
     },
     {
-      "hash": "sha256-RkrHmNlEe2vcl1cUdA9n8yB2+dj1INe\/XL7g6C3bUQM=",
+      "hash": "sha256-Pl1BD6QfMWOEy7kY22wlQWWPuGHvNqi5ZszOD9XHErQ=",
       "url": "_framework\/BikeRentalMgmt2.Shared.pdb"
     },
     {
-      "hash": "sha256-5JxM\/fdHPisf5q9vGf28xxtD3rHTEFuUj90yLJQIYug=",
+      "hash": "sha256-UfFLx\/sZf0fOSfBeeOPaAFVq\/PIQ\/2YTESBIVShr6pk=",
       "url": "_framework\/BikeRentalMgmt2.Client.dll"
     },
     {
-      "hash": "sha256-bOSLMVjehN6QZb7VJpRVvLX9H0rqoEWptGwb0TWgN7Y=",
+      "hash": "sha256-BLEPjcSC9LfAoMV0M5noL+UDqyiFTIKy8iGOKVOyMJA=",
       "url": "_framework\/BikeRentalMgmt2.Client.pdb"
     },
     {
@@ -1621,7 +1621,7 @@
       "url": "_framework\/dotnet.5.0.13.js.gz"
     },
     {
-      "hash": "sha256-KIOIMjD0HSd0S5l4zl6gU8UclHD0xde2fVFgCPEF0Y8=",
+      "hash": "sha256-2Nltc+NXIVP+ov1KQHntuVNNRdu\/RDDo\/H\/gkDLkNRY=",
       "url": "_framework\/BikeRentalMgmt2.Shared.dll.gz"
     },
     {
@@ -1681,12 +1681,16 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-zixoObJ6JWAPf+Gtn1jSX3jFmKqI+s5YRYecSxcgQqM=",
+      "hash": "sha256-HzGceaw+1sK+OzE7+DwYWA3cI6AbNiLVfjfHVoKjeXE=",
       "url": "index.html"
     },
     {
       "hash": "sha256-5Hn3d85lkAG3C9bic96qBASiDogJ8k1WLXC251QIyos=",
       "url": "manifest.json"
+    },
+    {
+      "hash": "sha256-5oQQJPOgHN0yYAbI+CytncqvGDmS8RB\/bQMzVfArZL4=",
+      "url": "scripts\/datatable.js"
     },
     {
       "hash": "sha256-gGyCPDnyscmcDuigH4tZ5ZJzoN4OxaDjo9ZvMPqWhhY=",
@@ -1697,5 +1701,5 @@
       "url": "BikeRentalMgmt2.Client.bundle.scp.css"
     }
   ],
-  "version": "RXODbQZ\/"
+  "version": "XyumcLTu"
 };

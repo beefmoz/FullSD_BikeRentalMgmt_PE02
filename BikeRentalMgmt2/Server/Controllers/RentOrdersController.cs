@@ -26,6 +26,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRentOrders()
         {
+            //return NotFound();
             var rentOrders =  await _unitOfWork.RentOrders.GetAll();
             return Ok(rentOrders);
         }

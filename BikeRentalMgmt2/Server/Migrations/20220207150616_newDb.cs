@@ -54,7 +54,8 @@ namespace BikeRentalMgmt2.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustContact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustAddr = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -109,7 +110,8 @@ namespace BikeRentalMgmt2.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StaffName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StaffContact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StaffEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StaffAddr = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -322,21 +324,21 @@ namespace BikeRentalMgmt2.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "Id", "CustAddr", "CustContact", "CustEmail", "CustName" },
+                columns: new[] { "Id", "CustAddr", "CustContact", "CustEmail", "FirstName", "LastName" },
                 values: new object[,]
                 {
-                    { 1, "Simei", "91234567", "amozlow888@gmail.com", "Amoz" },
-                    { 2, "Sengkang", "91234568", "Dead_Pixelz@gmail.com", "Hou Sheng" }
+                    { 1, "Simei", "91234567", "amozlow888@gmail.com", "Amoz", "Tan" },
+                    { 2, "Sengkang", "91234568", "Dead_Pixelz@gmail.com", "Hou Sheng", "Tan" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Staff",
-                columns: new[] { "Id", "StaffAddr", "StaffBranchID", "StaffContact", "StaffEmail", "StaffName", "StaffPos" },
+                columns: new[] { "Id", "FirstName", "LastName", "StaffAddr", "StaffBranchID", "StaffContact", "StaffEmail", "StaffPos" },
                 values: new object[,]
                 {
-                    { 1, "Simei", null, "81234567", "Lea819@hotmail.com", "Lea", "Counter" },
-                    { 2, "Simei", null, "81234568", "andrews09@hotmail.com", "Andrew", "Branch Manager" },
-                    { 3, "Orchard", null, "81235468", "benben09@hotmail.com", "Benjamin", "Branch Manager" }
+                    { 1, "Lea", "Tan", "Simei", null, "81234567", "Lea819@hotmail.com", "Counter" },
+                    { 2, "Andrew", "Tan", "Simei", null, "81234568", "andrews09@hotmail.com", "Branch Manager" },
+                    { 3, "Benjamin", "Tan", "Orchard", null, "81235468", "benben09@hotmail.com", "Branch Manager" }
                 });
 
             migrationBuilder.CreateIndex(

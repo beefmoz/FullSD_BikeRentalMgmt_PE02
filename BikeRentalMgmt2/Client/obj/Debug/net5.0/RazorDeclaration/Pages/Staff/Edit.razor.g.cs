@@ -131,7 +131,7 @@ using BikeRentalMgmt2.Client.Services;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/staff/{id:int}")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/staff/edit/{id:int}")]
     public partial class Edit : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -153,7 +153,7 @@ using BikeRentalMgmt2.Client.Services;
     async Task EditStaff()
     {
         await _client.PutAsJsonAsync($"{Endpoints.StaffEndpoint}/{id}", staff);
-        _navManager.NavigateTo("/staff/");
+        _navManager.NavigateTo("/staffs/");
     }
 
 #line default

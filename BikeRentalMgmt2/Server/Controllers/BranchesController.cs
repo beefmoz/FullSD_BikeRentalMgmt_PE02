@@ -26,6 +26,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBranches()
         {
+            //return NotFound();
             var branches = await _unitOfWork.Branches.GetAll(includes: q => q.Include(x => x.Staff));
             return Ok(branches);
         }

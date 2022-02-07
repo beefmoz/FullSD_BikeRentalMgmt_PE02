@@ -4,11 +4,20 @@
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label>Staff Name: </label>
+            <label>First Name: </label>
 
             <div>
-                <InputText @bind-Value="@staff.StaffName" class="form-control" />
-                <ValidationMessage For="@(() => staff.StaffName)" />
+                <InputText @bind-Value="@staff.FirstName" class="form-control" />
+                <ValidationMessage For="@(() => staff.FirstName)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Last Name: </label>
+
+            <div>
+                <InputText @bind-Value="@staff.LastName" class="form-control" />
+                <ValidationMessage For="@(() => staff.LastName)" />
             </div>
         </div>
 
@@ -43,7 +52,15 @@
             <label>Staff Position: </label>
 
             <div>
-                <InputText @bind-Value="@staff.StaffPos" class="form-control" />
+                <InputSelect @bind-Value="staff.StaffPos" class="form-control">
+                    <option value="">-- Select Staff Position--</option>
+                    <option>Manager</option>
+                    <option>Cashier</option>
+                    <option>Part time staff</option>
+                    <option>Human Resources</option>
+                    <option>Dev Team</option>
+                    <option>I dont run a business idk</option>
+                </InputSelect>
                 <ValidationMessage For="@(() => staff.StaffPos)" />
             </div>
         </div>
@@ -74,7 +91,7 @@
             @ButtonText
         </button>
     }
-    <BackToList Target="staff" />
+    <BackToList Target="staffs" />
 
 </EditForm>
 

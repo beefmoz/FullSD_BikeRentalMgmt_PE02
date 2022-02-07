@@ -12,11 +12,20 @@
     <ValidationSummary />
 
     <div class="form-group">
-        <label>Customer Name: </label>
+        <label>First Name: </label>
 
         <div>
-            <InputText @bind-Value="@customer.CustName" class="form-control" />
-            <ValidationMessage For="@(() => customer.CustName)" />
+            <InputText @bind-Value="@customer.FirstName" class="form-control" />
+            <ValidationMessage For="@(() => customer.FirstName)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Last Name: </label>
+
+        <div>
+            <InputText @bind-Value="@customer.LastName" class="form-control" />
+            <ValidationMessage For="@(() => customer.LastName)" />
         </div>
     </div>
 

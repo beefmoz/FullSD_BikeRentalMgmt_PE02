@@ -26,6 +26,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStaff()
         {
+            //return NotFound();
             var staff =  await _unitOfWork.Staff.GetAll(includes: q => q.Include(x => x.Branch));
             return Ok(staff);
         }

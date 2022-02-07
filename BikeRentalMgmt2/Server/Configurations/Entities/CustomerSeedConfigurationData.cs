@@ -16,7 +16,8 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                 new Customer
                 {
                     Id = 1,
-                    CustName = "Amoz",
+                    FirstName = "Amoz",
+                    LastName = "Tan",
                     CustEmail = "amozlow888@gmail.com",
                     CustContact = "91234567",
                     CustAddr = "Simei"
@@ -25,7 +26,8 @@ namespace BikeRentalMgmt2.Server.Configurations.Entities
                 new Customer
                 {
                     Id = 2,
-                    CustName = "Hou Sheng",
+                    FirstName = "Hou Sheng",
+                    LastName = "Tan",
                     CustEmail = "Dead_Pixelz@gmail.com",
                     CustContact = "91234568",
                     CustAddr = "Sengkang"
