@@ -1681,7 +1681,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-HzGceaw+1sK+OzE7+DwYWA3cI6AbNiLVfjfHVoKjeXE=",
+      "hash": "sha256-6MMwSj+sG05fwzXqal3ePLvIO8jMmIweiOBlm+yEP8M=",
       "url": "index.html"
     },
     {
@@ -1701,5 +1701,5 @@
       "url": "BikeRentalMgmt2.Client.bundle.scp.css"
     }
   ],
-  "version": "XyumcLTu"
+  "version": "P\/ejFd2C"
 };
