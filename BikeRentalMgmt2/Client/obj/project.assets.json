@@ -1353,6 +1353,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "BikeRentalMgmt2.Shared >= 1.0.0",
+      "Microsoft.AspNetCore.Components.Web >= 5.0.11",
       "Microsoft.AspNetCore.Components.WebAssembly >= 5.0.11",
       "Microsoft.AspNetCore.Components.WebAssembly.Authentication >= 5.0.11",
       "Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 5.0.11",
@@ -1404,6 +1405,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": {
+            "target": "Package",
+            "version": "[5.0.11, )"
+          },
           "Microsoft.AspNetCore.Components.WebAssembly": {
             "target": "Package",
             "version": "[5.0.11, )"

@@ -5,7 +5,7 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     },
     {
-      "hash": "sha256-dfkiFgv7MyCyyKg92nDjGLSTSB0kB6Z7iwilA\/2njXY=",
+      "hash": "sha256-hNO92R+38NPPbdrIzUESLEkOp6lZE46ldBMjIvcv9\/M=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -805,19 +805,19 @@
       "url": "_framework\/dotnet.5.0.13.js"
     },
     {
-      "hash": "sha256-9NHeSfdKZeUKzs4SE+so9SAkYdcclkgAg2O1jh2wZVI=",
+      "hash": "sha256-+Qef6KxVn8JQmHjnjsv9wMStSP7b+cUVMpkVNO5y49w=",
       "url": "_framework\/BikeRentalMgmt2.Shared.dll"
     },
     {
-      "hash": "sha256-Pl1BD6QfMWOEy7kY22wlQWWPuGHvNqi5ZszOD9XHErQ=",
+      "hash": "sha256-cd7Xsgh\/ojyHjmXYMKZuoY+b3OMKD0NJ7S3b8jkXlfY=",
       "url": "_framework\/BikeRentalMgmt2.Shared.pdb"
     },
     {
-      "hash": "sha256-UfFLx\/sZf0fOSfBeeOPaAFVq\/PIQ\/2YTESBIVShr6pk=",
+      "hash": "sha256-Qa2pHl33wmQQpbRdcpGzcNHZsQGokGTeZ\/r03elKSLY=",
       "url": "_framework\/BikeRentalMgmt2.Client.dll"
     },
     {
-      "hash": "sha256-BLEPjcSC9LfAoMV0M5noL+UDqyiFTIKy8iGOKVOyMJA=",
+      "hash": "sha256-izgAeRJjcgYXhFYVa37oD9NleVzFVHgXzgaqRcwJFY0=",
       "url": "_framework\/BikeRentalMgmt2.Client.pdb"
     },
     {
@@ -1621,7 +1621,7 @@
       "url": "_framework\/dotnet.5.0.13.js.gz"
     },
     {
-      "hash": "sha256-2Nltc+NXIVP+ov1KQHntuVNNRdu\/RDDo\/H\/gkDLkNRY=",
+      "hash": "sha256-otzDxRL513fFbwhIZUzDiDVnIIHd\/k5XZT\/a8iirD4k=",
       "url": "_framework\/BikeRentalMgmt2.Shared.dll.gz"
     },
     {
@@ -1681,12 +1681,36 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-6MMwSj+sG05fwzXqal3ePLvIO8jMmIweiOBlm+yEP8M=",
+      "hash": "sha256-HzGceaw+1sK+OzE7+DwYWA3cI6AbNiLVfjfHVoKjeXE=",
       "url": "index.html"
     },
     {
       "hash": "sha256-5Hn3d85lkAG3C9bic96qBASiDogJ8k1WLXC251QIyos=",
       "url": "manifest.json"
+    },
+    {
+      "hash": "sha256-9pzRbB1j5kaYnrdWn0kUbLU\/MHeO+c3RymYvHYCV6NE=",
+      "url": "Page_Banners\/Branch_Page_Banner.jpg"
+    },
+    {
+      "hash": "sha256-a20YSaDwBU92ZxE4esu3s4tJV\/fdjy9zStxdraoJ3HI=",
+      "url": "Page_Banners\/Customers_Page_Banner.jpg"
+    },
+    {
+      "hash": "sha256-kuXeZHjCwNHSP14e7PrVXenVXvFAgWsZr0MqBCoIQAI=",
+      "url": "Page_Banners\/Main_Page_Banner.jpg"
+    },
+    {
+      "hash": "sha256-HYG3LyhDQbc1J1hJO79TepvzQKXS0Cnjf8tZcKwFIEY=",
+      "url": "Page_Banners\/Rental_Page_Banner.jpg"
+    },
+    {
+      "hash": "sha256-\/DMUEoD7sv+pNMb\/uHKHsCsylED\/q\/qZtqKBW3kxjPo=",
+      "url": "Page_Banners\/RentOrder_Page_Banner.jpg"
+    },
+    {
+      "hash": "sha256-QD9l1GaHpYnZalhF5H9IQHaLgqLBvBE83TRkQnW2PYQ=",
+      "url": "Page_Banners\/Staff_Page_Banner.jpg"
     },
     {
       "hash": "sha256-5oQQJPOgHN0yYAbI+CytncqvGDmS8RB\/bQMzVfArZL4=",
@@ -1701,5 +1725,5 @@
       "url": "BikeRentalMgmt2.Client.bundle.scp.css"
     }
   ],
-  "version": "P\/ejFd2C"
+  "version": "Z\/qlT5eA"
 };

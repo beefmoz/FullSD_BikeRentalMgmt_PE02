@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeRentalMgmt2.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220207150616_newDb")]
+    [Migration("20220210081057_newDb")]
     partial class newDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,8 +29,14 @@ namespace BikeRentalMgmt2.Server.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Contact")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -75,6 +81,9 @@ namespace BikeRentalMgmt2.Server.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("TypeOfUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -98,9 +107,6 @@ namespace BikeRentalMgmt2.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BikeBranchID")
-                        .HasColumnType("int");
 
                     b.Property<string>("BikeModel")
                         .HasColumnType("nvarchar(max)");
@@ -235,14 +241,17 @@ namespace BikeRentalMgmt2.Server.Migrations
                     b.Property<int>("RentCustomerID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("RentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("RentDuration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("RentEnd")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("RentEndHour")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("RentStart")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("RentStartHour")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -448,6 +457,22 @@ namespace BikeRentalMgmt2.Server.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d9a61330-ac0c-47e3-bf1a-6c9905fafb0e",
+                            ConcurrencyStamp = "5f1a5ef0-055e-4c45-88a1-a03fdc1c5c9c",
+                            Name = "Staff",
+                            NormalizedName = "STAFF"
+                        },
+                        new
+                        {
+                            Id = "1fbb45c6-7e9b-4782-84fc-f28555dafcff",
+                            ConcurrencyStamp = "bef91f9c-e415-4b07-9a6c-830c24903adf",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -560,11 +585,9 @@ namespace BikeRentalMgmt2.Server.Migrations
 
             modelBuilder.Entity("BikeRentalMgmt2.Shared.Domain.Bike", b =>
                 {
-                    b.HasOne("BikeRentalMgmt2.Shared.Domain.Branch", "Branch")
+                    b.HasOne("BikeRentalMgmt2.Shared.Domain.Branch", null)
                         .WithMany("Bikes")
                         .HasForeignKey("BranchId");
-
-                    b.Navigation("Branch");
                 });
 
             modelBuilder.Entity("BikeRentalMgmt2.Shared.Domain.Branch", b =>

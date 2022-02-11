@@ -92,7 +92,6 @@ C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\BikeRentalMgmt2.Server.AssemblyInfoInputs.cache
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\BikeRentalMgmt2.Server.AssemblyInfo.cs
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\BikeRentalMgmt2.Server.csproj.CoreCompileInputs.cache
-C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\BikeRentalMgmt2.Server.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\BikeRentalMgmt2.Server.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\BikeRentalMgmt2.Server.RazorAssemblyInfo.cache
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Server\obj\Debug\net5.0\BikeRentalMgmt2.Server.RazorAssemblyInfo.cs

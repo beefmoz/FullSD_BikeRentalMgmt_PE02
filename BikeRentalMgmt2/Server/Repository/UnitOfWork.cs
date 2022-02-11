@@ -21,10 +21,9 @@ namespace BikeRentalMgmt2.Server.Repository
         private IGenericRepository<Customer> _customers;
         private IGenericRepository<Branch> _branches;
         private IGenericRepository<RentOrder> _rentorders;
-
         private UserManager<ApplicationUser> _userManager;
-
-        public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public UnitOfWork(ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;

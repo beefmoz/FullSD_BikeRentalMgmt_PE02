@@ -12,9 +12,6 @@ namespace BikeRentalMgmt2.Shared.Domain
         public string BikeModel { get; set; }
         public string BikeType { get; set; }
         public string BikeSize { get; set; }
-        public Nullable <int> BikeBranchID { get; set; }
-        public virtual Branch Branch { get; set; }
-
         public virtual List<RentOrder> RentOrders { get; set; }
     }
 }

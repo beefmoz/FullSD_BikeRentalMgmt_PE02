@@ -2,7 +2,6 @@ C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\bin\Debug\net5
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\bin\Debug\net5.0\BikeRentalMgmt2.Shared.dll
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\bin\Debug\net5.0\ref\BikeRentalMgmt2.Shared.dll
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\bin\Debug\net5.0\BikeRentalMgmt2.Shared.pdb
-C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\BikeRentalMgmt2.Shared.csproj.AssemblyReference.cache
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\BikeRentalMgmt2.Shared.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\BikeRentalMgmt2.Shared.AssemblyInfoInputs.cache
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\BikeRentalMgmt2.Shared.AssemblyInfo.cs
@@ -10,3 +9,4 @@ C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\BikeRentalMgmt2.Shared.dll
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\ref\BikeRentalMgmt2.Shared.dll
 C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\BikeRentalMgmt2.Shared.pdb
+C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Shared\obj\Debug\net5.0\BikeRentalMgmt2.Shared.csproj.AssemblyReference.cache

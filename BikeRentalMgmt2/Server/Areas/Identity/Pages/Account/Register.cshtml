@@ -28,6 +28,24 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Input.Address"></label>
+                <input asp-for="Input.Address" class="form-control" />
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Contact"></label>
+                <input asp-for="Input.Contact" class="form-control" />
+                <span asp-validation-for="Input.Contact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.TypeOfUser"></label>
+                <select asp-for="Input.TypeOfUser" class="form-control">
+                    <option>Staff</option>
+                    <option>Customer</option>
+                </select>
+                <span asp-validation-for="Input.TypeOfUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.Password"></label>
                 <input asp-for="Input.Password" class="form-control" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
@@ -37,6 +55,7 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>

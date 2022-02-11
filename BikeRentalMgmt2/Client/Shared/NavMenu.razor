@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Microsoft.AspNetCore.Components.Authorization
+@inject HttpClient _client
+@using System.Security.Claims
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-@inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
@@ -20,7 +22,7 @@
             <Authorized>
                 <li class="nav-item px-3">
                     <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
-                        <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity.Name!
+                        <span class="oi oi-person" aria-hidden="true"></span> Hello, @_currentUserName!
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
@@ -29,6 +31,21 @@
                              Match="NavLinkMatch.All">
                         <span class="oi oi-account-logout" aria-hidden="true"></span>
                         Log out
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="accounts">
+                        <span class="oi oi-person" aria-hidden="true"></span> View my account
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="branches">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Our Branches
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="bikes">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Our Bikes
                     </NavLink>
                 </li>
             </Authorized>
@@ -44,7 +61,7 @@
                     </NavLink>
                 </li>
                 @*<a href="authentication/register">Register</a>
-                    <a href="authentication/login">Log in</a>*@
+                <a href="authentication/login">Log in</a>*@
             </NotAuthorized>
         </AuthorizeView>
         <li class="nav-item px-3">
@@ -52,38 +69,79 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="branches">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Branches
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="bikes">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Bikes
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="customers">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Customers
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="rentorders">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Rent Orders
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="staffs">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Staff
-            </NavLink>
-        </li>
+
+        @if (_currentUserRole == "Customer")
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="rentorders">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Book a bike now!
+                </NavLink>
+            </li>
+        }
+        @if (_currentUserRole == "Staff")
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="customers">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Customers
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="rentorders">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Rent Orders
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="staffs">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Staff
+                </NavLink>
+            </li>
+        }
+
     </ul>
 </div>
 
+
 @code {
+
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private List<AppUser> AppUsers;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private string _currentUserRole;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
+            {
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                }
+            }
+        }
+        else
+        {
+            return;
+        }
+        if (_currentUserId != String.Empty)
+        {
+            _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+        }
+    }
 
     private void ToggleNavMenu()
     {

@@ -3,15 +3,13 @@
 @inject IJSRuntime js
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
-@attribute [Authorize]
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<img src="images/Branch_Page_Banner" width="800" height="383" alt="Branch data page" />
+
+<img src="\Page_Banners\Branch_Page_Banner.jpg" width="800" height="383" alt="Branch data page" />
 
 <h3 class="card-title">Bike Rental Branches</h3>
-<a href="/branches/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Register New Branch
-</a>
 <br />
 <br />
 @if (Branches == null)
@@ -20,18 +18,81 @@
 }
 else
 {
-    <table class="table table-responsive" id="branchesTable">
-        <thead>
-            <tr>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var branch in Branches)
-            {
+    @if (_currentUserRole == "Staff")
+    {
+        <table class="table table-responsive" id="branchesTable">
+            <thead>
+                <tr>
+                    <th>Address</th>
+                    <th>Contacts</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var branch in Branches)
+                {
                 <tr>
                     <td>@branch.BranchAddr</td>
+                    <td>@branch.BranchContact</td>
+                    <td>
+                        <a href="/branches/view/@branch.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/branches/edit/@branch.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    @if (_currentUserRole == "Customer")
+    {
+        <table class="table table-responsive" id="branchesTable">
+            <thead>
+                <tr>
+                    <th>Address</th>
+                    <th>Contacts</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var branch in Branches)
+                {
+                <tr>
+                    <td>@branch.BranchAddr</td>
+                    <td>@branch.BranchContact</td>
+                    <td>
+                        <a href="/branches/view/@branch.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    @if (_currentUserRole == "Admin")
+    {
+        <a href="/branches/create" class="btn btn-secondary">
+            <span class="oi oi-plus"></span>
+            Register New Branch
+        </a>
+        <table class="table table-responsive" id="branchesTable">
+            <thead>
+                <tr>
+                    <th>Address</th>
+                    <th>Contacts</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var branch in Branches)
+                {
+                <tr>
+                    <td>@branch.BranchAddr</td>
+                    <td>@branch.BranchContact</td>
                     <td>
                         <a href="/branches/view/@branch.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -44,39 +105,71 @@ else
                         </button>
                     </td>
                 </tr>
-            }
-        </tbody>
-    </table>
-
-
-    @code {
-        private List<Branch> Branches;
-        protected async override Task OnInitializedAsync()
-        {
-            _interceptor.MonitorEvent();
-            Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
-        }
-
-        async Task Delete(int branchId)
-        {
-            var branch = Branches.First(q => q.Id == branchId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {branch.Id}?");
-
-            if (confirm)
-            {
-                await _client.DeleteAsync($"{Endpoints.BranchesEndpoint}/{branchId}");
-            }
-
-            await OnInitializedAsync();
-        }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            await js.InvokeVoidAsync("AddDataTable", "#branchesTable");
-        }
-
-        public void Dispose()
-        {
-            js.InvokeVoidAsync("DataTablesDispose", "#branchesTable");
-        }
+                }
+            </tbody>
+        </table>
     }
 }
+
+
+@code {
+    private List<Branch> Branches;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private string _currentUserRole;
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
+            {
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                }
+            }
+        }
+        else
+        {
+            return;
+        }
+        if (_currentUserId != String.Empty)
+        {
+            _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+        }
+    }
+
+    async Task Delete(int branchId)
+    {
+        var branch = Branches.First(q => q.Id == branchId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {branch.Id}?");
+
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.BranchesEndpoint}/{branchId}");
+        }
+
+        await OnInitializedAsync();
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#branchesTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#branchesTable");
+    }
+}
+

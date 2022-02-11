@@ -35,7 +35,7 @@ namespace BikeRentalMgmt2.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RentOrder>> GetRentOrder(int id)
         {
-            var rentOrder = await _unitOfWork.RentOrders.GetAll(q => q.Id == id); 
+            var rentOrder = await _unitOfWork.RentOrders.Get(q => q.Id == id); 
 
             if (rentOrder == null)
             {

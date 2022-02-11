@@ -10,5 +10,8 @@ namespace BikeRentalMgmt2.Server.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string TypeOfUser { get; set; }
+        public string Address { get; set; }
+        public string Contact { get; set; }
     }
 }

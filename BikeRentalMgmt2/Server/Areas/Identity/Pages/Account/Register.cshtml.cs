@@ -14,6 +14,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using System.Net.Http.Json;
+using BikeRentalMgmt2.Client.Static;
+using BikeRentalMgmt2.Shared.Domain;
 
 namespace BikeRentalMgmt2.Server.Areas.Identity.Pages.Account
 {
@@ -24,6 +28,7 @@ namespace BikeRentalMgmt2.Server.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly HttpClient _client;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
@@ -31,7 +36,8 @@ namespace BikeRentalMgmt2.Server.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager
+            RoleManager<IdentityRole> roleManager,
+            HttpClient httpclient
             )
         {
             _userManager = userManager;
@@ -39,6 +45,7 @@ namespace BikeRentalMgmt2.Server.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _client = httpclient;
         }
 
         [BindProperty]
@@ -63,6 +70,18 @@ namespace BikeRentalMgmt2.Server.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
+            [Display(Name = "Registering as a...")]
+            public string TypeOfUser { get; set; }
+
+            [Required]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "Contact")]
+            public string Contact { get; set; }
+
+            [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -80,24 +99,43 @@ namespace BikeRentalMgmt2.Server.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
-                    
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, TypeOfUser= Input.TypeOfUser, Contact= Input.Contact, Address = Input.Address, PhoneNumber= Input.Contact};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    if(!await _roleManager.RoleExistsAsync("User"))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole("User"));
-                    }
-                    await _userManager.AddToRoleAsync(user, "User");
 
+                    if (Input.TypeOfUser == "Staff")
+                    {
+                        if (!await _roleManager.RoleExistsAsync("Staff"))
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("Staff"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "Staff");
+                        var newStaff = new Staff { FirstName = Input.FirstName, LastName = Input.LastName, StaffEmail = Input.Email, StaffAddr = Input.Address, StaffContact = Input.Contact, StaffBranchID = null, StaffPos = null };
+                        await _client.PostAsJsonAsync("https://localhost:44391/api/staff", newStaff);
+                    }
+
+                    if (Input.TypeOfUser == "Customer")
+                    {
+                        if (!await _roleManager.RoleExistsAsync("Customer"))
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("Customer"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "Customer");
+                        var newCustomer = new Customer { FirstName = Input.FirstName, LastName = Input.LastName, CustEmail = Input.Email, CustAddr = Input.Address, CustContact = Input.Contact };
+                        await _client.PostAsJsonAsync("https://localhost:44391/api/customers", newCustomer);
+                    }
                     _logger.LogInformation("User created a new account with password.");
+
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

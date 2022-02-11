@@ -98,35 +98,49 @@ using BikeRentalMgmt2.Client.Static;
 #nullable disable
 #nullable restore
 #line 13 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using BikeRentalMgmt2.Client.Components;
+using BikeRentalMgmt2.Client.Model;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 14 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using BikeRentalMgmt2.Shared.Domain;
+using BikeRentalMgmt2.Client.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 15 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Authorization;
+using BikeRentalMgmt2.Shared.Domain;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 16 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 17 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 18 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
 using BikeRentalMgmt2.Client.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\RentOrders\Create.razor"
+using System.Security.Claims;
 
 #line default
 #line hidden
@@ -140,15 +154,21 @@ using BikeRentalMgmt2.Client.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 116 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\RentOrders\Create.razor"
+#line 122 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\RentOrders\Create.razor"
        
 
-    RentOrder rentorder = new RentOrder();
+        RentOrder rentorder = new RentOrder();
+
+        [Parameter] public bool Disabled { get; set; } = true;
 
     private IList<Branch> Branches;
     private IList<RentOrder> Rentorders;
     private IList<Customer> Customers;
     private IList<Bike> Bikes;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private string _currentUserRole;
 
     protected async override Task OnInitializedAsync()
     {
@@ -156,6 +176,32 @@ using BikeRentalMgmt2.Client.Services;
         Rentorders = await _client.GetFromJsonAsync<List<RentOrder>>($"{Endpoints.RentOrdersEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
         Bikes = await _client.GetFromJsonAsync<List<Bike>>($"{Endpoints.BikesEndpoint}");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
+            {
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                }
+            }
+        }
+        else
+        {
+            return;
+        }
+        if (_currentUserId != String.Empty)
+        {
+            _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+        }
     }
 
     private async Task Createrentorder()
@@ -167,6 +213,7 @@ using BikeRentalMgmt2.Client.Services;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager _navManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpClient _client { get; set; }
     }

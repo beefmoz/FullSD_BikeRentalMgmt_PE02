@@ -2344,6 +2344,7 @@
       "BikeRentalMgmt2.Client/1.0.0": {
         "dependencies": {
           "BikeRentalMgmt2.Shared": "1.0.0",
+          "Microsoft.AspNetCore.Components.Web": "5.0.11",
           "Microsoft.AspNetCore.Components.WebAssembly": "5.0.11",
           "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "5.0.11",
           "Microsoft.Extensions.Http": "5.0.0",

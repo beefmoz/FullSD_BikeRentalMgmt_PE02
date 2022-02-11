@@ -98,40 +98,47 @@ using BikeRentalMgmt2.Client.Static;
 #nullable disable
 #nullable restore
 #line 13 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using BikeRentalMgmt2.Client.Components;
+using BikeRentalMgmt2.Client.Model;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 14 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using BikeRentalMgmt2.Shared.Domain;
+using BikeRentalMgmt2.Client.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 15 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Authorization;
+using BikeRentalMgmt2.Shared.Domain;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 16 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 17 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 18 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
 using BikeRentalMgmt2.Client.Services;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/rentorder/view/{id:int}")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/rentorders/view/{id:int}")]
     public partial class View : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

@@ -4,18 +4,27 @@
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label>Rent Start: </label>
+            <label>Rent Date: </label>
             <div>
-                <InputDate @bind-Value="@rentorder.RentStart" class="form-control" />
-                <ValidationMessage For="@(() => rentorder.RentStart)" />
+                <InputDate @bind-Value="@rentorder.RentDate" class="form-control" />
+                <ValidationMessage For="@(() => rentorder.RentDate)" />
             </div>
         </div>
 
         <div class="form-group">
-            <label>Rent End: </label>
+            <label>Rent Start Hour (Key in 24h format eg. start at 9am: 9): </label>
             <div>
-                <InputDate @bind-Value="@rentorder.RentEnd" class="form-control" />
-                <ValidationMessage For="@(() => rentorder.RentEnd)" />
+                <InputNumber @bind-Value="@rentorder.RentStartHour" class="form-control" min="9" max="20" />
+                <ValidationMessage For="@(() => rentorder.RentStartHour)" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label>Rent End Hour (Key in 24h format eg. end at 10am: 10): </label>
+            <div>
+                <InputNumber @bind-Value="@rentorder.RentEndHour" class="form-control" min="10" max="21" />
+                <ValidationMessage For="@(() => rentorder.RentEndHour)" />
             </div>
         </div>
 
@@ -98,7 +107,7 @@
                 <ValidationMessage For="@(() => rentorder.RentCost)" />
             </div>
         </div>
-        </fieldset>
+    </fieldset>
 
         @if (!Disabled)
         {
@@ -119,6 +128,7 @@
     private IList<Customer> Customers;
     private IList<Branch> Branches;
     private IList<Bike> Bikes;
+
 
     protected async override Task OnInitializedAsync()
     {

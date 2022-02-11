@@ -3,14 +3,10 @@
 @inject IJSRuntime js
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
-@attribute [Authorize]
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h3 class="card-title">Bike Rental bikes</h3>
-<a href="/bikes/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Register New Bike
-</a>
-<br />
 <br />
 @if (Bikes == null)
 {
@@ -18,63 +14,128 @@
 }
 else
 {
-    <table class="table table-responsive" id="bikesTable">
-        <thead>
-            <tr>
-                <th>Bike Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var bike in Bikes)
-            {
+    @if (_currentUserRole == "Staff" || _currentUserRole == "Admin")
+    {
+        <a href="/bikes/create" class="btn btn-secondary">
+            <span class="oi oi-plus"></span>
+            Register New Bike
+        </a>
+        <br />
+        <br />
+        <table class="table table-responsive" id="bikesTable">
+            <thead>
                 <tr>
-                    <td>@bike.BikeModel</td>
-                    <td>
-                        <a href="/bikes/view/@bike.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/bikes/edit/@bike.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(bike.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
+                    <th>Bike Name</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
 
+                @foreach (var bike in Bikes)
+                {
 
-    @code {
-        private List<Bike> Bikes;
-        protected async override Task OnInitializedAsync()
+                    <tr>
+                        <td>@bike.BikeModel</td>
+                        <td>
+                            <a href="/bikes/view/@bike.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/bikes/edit/@bike.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(() => Delete(bike.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    @if (_currentUserRole == "Customer")
+    {
+        <table class="table table-responsive" id="bikesTable">
+            <thead>
+                <tr>
+                    <th>Bike Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var bike in Bikes)
+                {
+                    <tr>
+                        <td>@bike.BikeModel</td>
+                        <td>
+                            <a href="/bikes/view/@bike.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private List<Bike> Bikes;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private string _currentUserRole;
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Bikes = await _client.GetFromJsonAsync<List<Bike>>($"{Endpoints.BikesEndpoint}");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
         {
-            _interceptor.MonitorEvent();
-            Bikes = await _client.GetFromJsonAsync<List<Bike>>($"{Endpoints.BikesEndpoint}");
-        }
-
-        async Task Delete(int bikeId)
-        {
-            var bike = Bikes.First(q => q.Id == bikeId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {bike.Id}?");
-
-            if (confirm)
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
             {
-                await _client.DeleteAsync($"{Endpoints.BikesEndpoint}/{bikeId}");
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                }
             }
-
-            await OnInitializedAsync();
         }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
+        else
         {
-            await js.InvokeVoidAsync("AddDataTable", "#bikesTable");
+            return;
+        }
+        if (_currentUserId != String.Empty)
+        {
+            _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+        }
+    }
+
+    async Task Delete(int bikeId)
+    {
+        var bike = Bikes.First(q => q.Id == bikeId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {bike.Id}?");
+
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.BikesEndpoint}/{bikeId}");
         }
 
-        public void Dispose()
-        {
-            js.InvokeVoidAsync("DataTablesDispose", "#bikesTable");
-        }
+        await OnInitializedAsync();
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bikesTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#bikesTable");
     }
 }

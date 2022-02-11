@@ -20,6 +20,6 @@
     async Task Editrentorder()
     {
         await _client.PutAsJsonAsync($"{Endpoints.RentOrdersEndpoint}/{id}", rentOrder);
-        _navManager.NavigateTo("/rentorder/");
+        _navManager.NavigateTo("/rentorders/");
     }
 }

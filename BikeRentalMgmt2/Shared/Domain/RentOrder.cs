@@ -8,8 +8,10 @@ namespace BikeRentalMgmt2.Shared.Domain
 {
     public class RentOrder: BaseDomainModel
     {
-        public DateTime RentStart { get; set; }
-        public DateTime RentEnd { get; set; }
+        public DateTime RentDate { get; set; }
+        public int RentStartHour { get; set; }
+
+        public int RentEndHour { get; set; }
         public int RentCustomerID { get; set; }
         public virtual Customer Customer { get; set; }
         public int RentBikeID { get; set; }

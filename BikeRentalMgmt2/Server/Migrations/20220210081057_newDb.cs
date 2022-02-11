@@ -28,6 +28,9 @@ namespace BikeRentalMgmt2.Server.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeOfUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Contact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -259,7 +262,6 @@ namespace BikeRentalMgmt2.Server.Migrations
                     BikeModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BikeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BikeSize = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BikeBranchID = table.Column<int>(type: "int", nullable: true),
                     BranchId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -279,8 +281,9 @@ namespace BikeRentalMgmt2.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RentStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RentEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RentStartHour = table.Column<int>(type: "int", nullable: false),
+                    RentEndHour = table.Column<int>(type: "int", nullable: false),
                     RentCustomerID = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     RentBikeID = table.Column<int>(type: "int", nullable: false),
@@ -311,6 +314,15 @@ namespace BikeRentalMgmt2.Server.Migrations
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "d9a61330-ac0c-47e3-bf1a-6c9905fafb0e", "5f1a5ef0-055e-4c45-88a1-a03fdc1c5c9c", "Staff", "STAFF" },
+                    { "1fbb45c6-7e9b-4782-84fc-f28555dafcff", "bef91f9c-e415-4b07-9a6c-830c24903adf", "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.InsertData(

@@ -4,55 +4,128 @@
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
 @attribute [Authorize]
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h3 class="card-title">Staff</h3>
-<a href="/staffs/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Register New Staff
-</a>
-<br />
-<br />
 
+<img src="\Page_Banners\Staff_Page_Banner.jpg" width="800" height="383" alt="Staff data page" />
 @if (Staff == null)
 {
-<div class="alert alert-info">Loading Staff Functions...</div> }
+    <div class="alert alert-info">Loading Staff Functions...</div> }
 else
 {
-<table class="table table-responsive" id="staffsTable">
-    <thead>
-        <tr>
-            <th>Staff Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var staff in Staff)
-        {
-<tr>
-    <td>@staff.FirstName</td>
-    <td>
-        <a href="/staff/view/@staff.Id" class="btn btn-primary">
-            <span class="oi oi-book"></span>
+    @if (_currentUserRole == "Staff")
+    {
+        <table class="table table-responsive" id="staffsTable">
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var staff in Staff)
+                {
+                    <tr>
+                        <td>@staff.FirstName</td>
+                        <td>
+                            <a href="/staff/view/@staff.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            @if(staff.StaffEmail== _currentUserName) { 
+                            <a href="/staff/edit/@staff.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (_currentUserRole == "Customer")
+    {
+        <div class="form-group">
+            Unauthorized.
+        </div>
+    } 
+    @if (_currentUserRole == "Admin")
+    {
+        <a href="/staffs/create" class="btn btn-secondary">
+            <span class="oi oi-plus"></span>
+            Register New Staff
         </a>
-        <a href="/staff/edit/@staff.Id" class="btn btn-warning">
-            <span class="oi oi-pencil"></span>
-        </a>
-        <button class="btn btn-danger" @onclick="@(() => Delete(staff.Id))">
-            <span class="oi oi-delete"></span>
-        </button>
-    </td>
-</tr>}
-    </tbody>
-</table>
+        <br />
+        <br />
+        <table class="table table-responsive" id="staffsTable">
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var staff in Staff)
+                {
+                    <tr>
+                        <td>@staff.FirstName</td>
+                        <td>
+                            <a href="/staff/view/@staff.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/staff/edit/@staff.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(() => Delete(staff.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
 
-@code { 
+    @code {
         private List<Staff> Staff;
+        private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+        private string _currentUserId;
+        private string _currentUserName;
+        private string _currentUserRole;
 
         protected async override Task OnInitializedAsync()
         {
             _interceptor.MonitorEvent();
             Staff = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffEndpoint}");
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            if (user.Identity.IsAuthenticated)
+            {
+                _claims = user.Claims;
+                _currentUserName = user.Identity.Name;
+                if (_claims.Count() > 0)
+                {
+                    foreach (var claim in _claims)
+                    {
+                        if (claim.Type == "sub")
+                        {
+                            _currentUserId = claim.Value;
+                            continue;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+            if (_currentUserId != String.Empty)
+            {
+                _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+            }
         }
 
         async Task Delete(int StaffId)

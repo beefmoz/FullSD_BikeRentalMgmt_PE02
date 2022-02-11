@@ -4,14 +4,11 @@
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
 @attribute [Authorize]
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
+    <img src="\Page_Banners\Rental_Page_Banner.jpg" width="800" height="383" alt="rentl data page" />
 <h3 class="card-title">Bike Rental Rent Orders</h3>
-<a href="/rentorders/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Register New Rent Order
-</a>
-<br />
-<br />
 
 @if (Rentorders == null)
 {
@@ -19,41 +16,113 @@
 }
 else
 {
-    <table class="table table-responsive" id="rentordersTable">
-        <thead>
-            <tr>
-                <th>Rent Order</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var rentorder in Rentorders)
-            {
+    @if (_currentUserRole == "Customer")
+    {
+        <a href="/rentorders/create" class="btn btn-secondary">
+            <span class="oi oi-plus"></span>
+            Register New Rent Order
+        </a>
+        <br />
+        <br />
+        <table class="table table-responsive" id="rentordersTable">
+            <thead>
                 <tr>
-                    <td>@rentorder.Id</td>
-                    <td>
-                        <a href="/rentorders/view/@rentorder.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/rentorders/edit/@rentorder.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(rentorder.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
+                    <th>Rent Order</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                @foreach (var rentorder in Rentorders)
+                {
+                    @foreach (var customer in Customers)
+                    {
+                        @if (rentorder.RentCustomerID == customer.Id && _currentUserName == customer.CustEmail)
+                        {
+                            <tr>
+                                <td>@rentorder.Id</td>
+                                <td>
+                                    <a href="/rentorders/view/@rentorder.Id" class="btn btn-primary">
+                                        <span class="oi oi-book"></span>
+                                    </a>
+                                    <a href="/rentorders/edit/@rentorder.Id" class="btn btn-warning">
+                                        <span class="oi oi-pencil"></span>
+                                    </a>
+                                    <button class="btn btn-danger" @onclick="@(() => Delete(rentorder.Id))">
+                                        <span class="oi oi-delete"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    @if (_currentUserRole == "Staff" || _currentUserRole== "Admin")
+    {
+        <br />
+        <br />
+        <table class="table table-responsive" id="rentordersTable">
+            <thead>
+                <tr>
+                    <th>Rent Order</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rentorder in Rentorders)
+                {
+                    <tr>
+                        <td>@rentorder.Id</td>
+                        <td>
+                            <a href="/rentorders/view/@rentorder.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
     @code {
         private List<RentOrder> Rentorders;
+        private List<Customer> Customers;
+        private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+        private string _currentUserId;
+        private string _currentUserName;
+        private string _currentUserRole;
         protected async override Task OnInitializedAsync()
         {
             _interceptor.MonitorEvent();
             Rentorders = await _client.GetFromJsonAsync<List<RentOrder>>($"{Endpoints.RentOrdersEndpoint}");
+            Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            if (user.Identity.IsAuthenticated)
+            {
+                _claims = user.Claims;
+                _currentUserName = user.Identity.Name;
+                if (_claims.Count() > 0)
+                {
+                    foreach (var claim in _claims)
+                    {
+                        if (claim.Type == "sub")
+                        {
+                            _currentUserId = claim.Value;
+                            continue;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+            if (_currentUserId != String.Empty)
+            {
+                _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+            }
         }
 
         async Task Delete(int rentorderId)

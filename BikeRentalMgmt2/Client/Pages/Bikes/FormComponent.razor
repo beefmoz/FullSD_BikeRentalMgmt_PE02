@@ -37,25 +37,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label>Branch ID: </label>
-
-            <div>
-                <InputSelect @bind-Value="@bike.BikeBranchID" class="form-control">
-
-                    <option value="">-- Select Branch --</option>
-                    @if (Branches != null)
-                    {
-                        foreach (var branch in Branches)
-                        {
-                            <option value="@branch.Id">@branch.BranchAddr</option>
-                        }
-                    }
-
-                </InputSelect>
-                <ValidationMessage For="@(() => bike.BikeBranchID)" />
-            </div>
-        </div>
     </fieldset>
 
         @if (!Disabled)

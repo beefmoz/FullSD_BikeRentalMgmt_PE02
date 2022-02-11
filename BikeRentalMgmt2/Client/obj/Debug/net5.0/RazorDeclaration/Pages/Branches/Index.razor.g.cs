@@ -98,34 +98,41 @@ using BikeRentalMgmt2.Client.Static;
 #nullable disable
 #nullable restore
 #line 13 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using BikeRentalMgmt2.Client.Components;
+using BikeRentalMgmt2.Client.Model;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 14 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using BikeRentalMgmt2.Shared.Domain;
+using BikeRentalMgmt2.Client.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 15 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Authorization;
+using BikeRentalMgmt2.Shared.Domain;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 16 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 17 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 18 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\_Imports.razor"
 using BikeRentalMgmt2.Client.Services;
 
 #line default
@@ -133,7 +140,7 @@ using BikeRentalMgmt2.Client.Services;
 #nullable disable
 #nullable restore
 #line 6 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Branches\Index.razor"
-           [Authorize]
+using System.Security.Claims;
 
 #line default
 #line hidden
@@ -147,41 +154,71 @@ using BikeRentalMgmt2.Client.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 52 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Branches\Index.razor"
-           
-        private List<Branch> Branches;
-        protected async override Task OnInitializedAsync()
+#line 115 "C:\Users\Amoz\source\repos\BikeRentalMgmt2\BikeRentalMgmt2\Client\Pages\Branches\Index.razor"
+       
+    private List<Branch> Branches;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private string _currentUserRole;
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
         {
-            _interceptor.MonitorEvent();
-            Branches = await _client.GetFromJsonAsync<List<Branch>>($"{Endpoints.BranchesEndpoint}");
-        }
-
-        async Task Delete(int branchId)
-        {
-            var branch = Branches.First(q => q.Id == branchId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {branch.Id}?");
-
-            if (confirm)
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
             {
-                await _client.DeleteAsync($"{Endpoints.BranchesEndpoint}/{branchId}");
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                }
             }
-
-            await OnInitializedAsync();
         }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
+        else
         {
-            await js.InvokeVoidAsync("AddDataTable", "#branchesTable");
+            return;
+        }
+        if (_currentUserId != String.Empty)
+        {
+            _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+        }
+    }
+
+    async Task Delete(int branchId)
+    {
+        var branch = Branches.First(q => q.Id == branchId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete branch Id {branch.Id}?");
+
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.BranchesEndpoint}/{branchId}");
         }
 
-        public void Dispose()
-        {
-            js.InvokeVoidAsync("DataTablesDispose", "#branchesTable");
-        }
-    
+        await OnInitializedAsync();
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#branchesTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#branchesTable");
+    }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpInterceptorService _interceptor { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime js { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpClient _client { get; set; }

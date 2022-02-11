@@ -1,6 +1,8 @@
 ﻿@page "/rentorders/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h3 class="card-title">Register New rentorder</h3>
 
@@ -10,20 +12,30 @@
 <EditForm Model="@rentorder" OnValidSubmit="Createrentorder">
     <DataAnnotationsValidator />
     <ValidationSummary />
-
+    <h1>Cycle with us! </h1>
+    <h4> Our rates come at $5/h !</h4>
     <div class="form-group">
-        <label>Rent Start: </label>
+        <label>Rent Date: </label>
         <div>
-            <InputDate @bind-Value="@rentorder.RentStart" class="form-control" />
-            <ValidationMessage For="@(() => rentorder.RentStart)" />
+            <InputDate @bind-Value="@rentorder.RentDate" class="form-control" />
+            <ValidationMessage For="@(() => rentorder.RentDate)" />
         </div>
     </div>
 
     <div class="form-group">
-        <label>Rent End: </label>
+        <label>Rent Start Hour (Key in 24h format eg. start at 9am: 9): </label>
         <div>
-            <InputDate @bind-Value="@rentorder.RentEnd" class="form-control" />
-            <ValidationMessage For="@(() => rentorder.RentEnd)" />
+            <InputNumber @bind-Value="@rentorder.RentStartHour" class="form-control" min="9" max="20"/>
+            <ValidationMessage For="@(() => rentorder.RentStartHour)" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label>Rent End Hour (Key in 24h format eg. end at 10am: 10): </label>
+        <div>
+            <InputNumber @bind-Value="@rentorder.RentEndHour" class="form-control" min="10" max="21"/>
+            <ValidationMessage For="@(() => rentorder.RentEndHour)" />
         </div>
     </div>
 
@@ -38,7 +50,10 @@
                 {
                     foreach (var customer in Customers)
                     {
-                        <option value="@customer.Id">@customer.Id</option>
+                        @if (customer.CustEmail == _currentUserName)
+                        {
+                            <option value="@customer.Id">@customer.FirstName</option>
+                        }
                     }
                 }
 
@@ -98,15 +113,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label>Rent Cost: </label>
-
-        <div>
-            <InputNumber @bind-Value="@rentorder.RentCost" class="form-control" />
-            <ValidationMessage For="@(() => rentorder.RentCost)" />
-        </div>
-    </div>
-
     <button type="submit" class="btn btn-success btn-block">
         Register Rent Order
     </button>
@@ -115,12 +121,18 @@
 
 @code {
 
-    RentOrder rentorder = new RentOrder();
+        RentOrder rentorder = new RentOrder();
+
+        [Parameter] public bool Disabled { get; set; } = true;
 
     private IList<Branch> Branches;
     private IList<RentOrder> Rentorders;
     private IList<Customer> Customers;
     private IList<Bike> Bikes;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private string _currentUserRole;
 
     protected async override Task OnInitializedAsync()
     {
@@ -128,6 +140,32 @@
         Rentorders = await _client.GetFromJsonAsync<List<RentOrder>>($"{Endpoints.RentOrdersEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
         Bikes = await _client.GetFromJsonAsync<List<Bike>>($"{Endpoints.BikesEndpoint}");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
+            {
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                }
+            }
+        }
+        else
+        {
+            return;
+        }
+        if (_currentUserId != String.Empty)
+        {
+            _currentUserRole = await _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+        }
     }
 
     private async Task Createrentorder()
